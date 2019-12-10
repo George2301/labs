@@ -1,0 +1,38 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {    //Каждая задача выделяется одним блоком
+            "label": "Build C++ project",
+            "type": "shell",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "command": "g++", 
+            "args": [
+                "-g",
+                "main.cpp",
+                "condition_parser.cpp",
+                "database.cpp",
+                "date.cpp",
+                "node.cpp",
+                "token.cpp",
+                "test_runner.cpp",
+                "-o",
+                "main"
+            ]
+        },
+        {  //<--- интересующая нас задача
+            "label": "Build & run C++ project", //Имя задача
+            "type": "shell",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "command": "make", //Соответвенно сборка
+            "args": [
+                "run" //Аргумент для запуска
+            ]
+        }
+    ]
+}

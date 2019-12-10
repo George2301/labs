@@ -1,0 +1,83 @@
+﻿// dllmain.cpp : Определяет точку входа для приложения DLL.
+#include <windows.h>
+#include <iostream>
+
+BOOL APIENTRY DllMain( HMODULE hModule,
+                       DWORD  ul_reason_for_call,
+                       LPVOID lpReserved
+                     )
+{
+    switch (ul_reason_for_call)
+    {
+    case DLL_PROCESS_ATTACH:
+    case DLL_THREAD_ATTACH:
+    case DLL_THREAD_DETACH:
+    case DLL_PROCESS_DETACH:
+        break;
+    }
+    return TRUE;
+}
+
+bool CheckChar(char ch){
+	return (((ch >= '0') && (ch <= '9')) || ((ch >= 'A') && (ch <= 'Z')) || ((ch >= 'a') && (ch <= 'z')));
+}
+
+void PasteSymbol(char*& str, int& length, char c) {
+	char* new_str = new char[length + 2];
+	for (int i = 0; i < length; i++)
+		new_str[i] = str[i];
+	delete[] str;
+
+	new_str[length] = c;
+	new_str[length + 1] = '\0';
+	str = new_str;
+	length = length + 1;
+	return;
+}
+
+extern "C" __declspec(dllexport) void OrderString(FILE * file, char*& str, int& length) {
+	if (!(feof(file))) {
+		char c;
+		fscanf(file, "%c", &c);
+		if (CheckChar(c) && !(feof(file)))
+			PasteSymbol(str, length, c);
+		else if ((length > 0) && (str[length - 1] != ' ') && !(feof(file))) {
+			c = ' ';
+			PasteSymbol(str, length, c);
+		}
+		OrderString(file, str, length);
+	}
+	else return;
+}
+
+void LengthOfLastWord(char* str, int& length, int& k) {
+	if (str[length] != ' ' && length >= 0) {
+		k++;
+		length--;
+		LengthOfLastWord(str, length, k);
+	}
+	else return;
+}
+
+void WriteLastWord(char* str, char*& str2, int& length, int length2, int k) {
+	if (length2 < k) {
+		str2[length2] = str[length + 1];
+		length++;
+		WriteLastWord(str, str2, length, length2 + 1, k);
+	}
+	else return;
+}
+
+extern "C" __declspec(dllexport) void FlipString(char* str, char*& str2, int length, int length2) {
+	if (length >= 0) {
+		int k = 0;
+		LengthOfLastWord(str, length, k);
+		WriteLastWord(str, str2, length, length2, length2 + k);
+		str2[length2 + k] = ' ';
+		length2 = length2 + k + 1;
+		length = length - k - 1;
+		FlipString(str, str2, length, length2);
+	}
+	else return;
+}
+

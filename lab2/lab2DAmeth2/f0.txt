@@ -1,0 +1,15 @@
+Array A:
+Size: 2x2
+-1 1 
+1 1 
+
+Array B:
+Size: 3x3
+0 0 0 
+1 2 3 
+-1 2 -3 
+
+Composision of nonzero elements of matrix B is bigger; A = -1 , B = 36
+Average of nonzero elements of line 0:   0.0000
+Average of nonzero elements of line 1:   1.0000
+Average of nonzero elements of line 2:  -0.2222

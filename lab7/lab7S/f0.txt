@@ -1,0 +1,2 @@
+Source string: abcd 123 def1 
+Flipped string: def1 123 abcd

@@ -1,0 +1,18 @@
+Array A:
+Amount of elements 2
+1, 2, 
+Array B:
+Amount of elements 6
+1, 2, 3, 4, 5, 6, 
+Array C:
+Amount of elements 9
+1, 2, 3, 4, 5, 6, 7, 8, 9, 
+Sin: 
+Given n: 2.000000
+Elements bigger than given were not found
+Exp: 
+Given n: 2.000000
+Array A and B an C has bigger minimal element, that bigger than given element: 2.718282 = f(1)
+Log: 
+Given n: 2.000000
+Array C has bigger minimal element, that bigger than given element: 2.079442 = f(8)
