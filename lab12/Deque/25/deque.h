@@ -13,6 +13,7 @@ public:
     int GetBefore();
     int GetAfter();
     int GetLength();
+    void Resize();
     void Push_front(T val);
     void Push_back(T val);
     int Pop_front();

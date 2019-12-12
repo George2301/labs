@@ -1,14 +1,11 @@
 #include "node_add.h"
 
-List_Exp::List_Exp(): List<int>(){   
-    return;
-}
 
-std::ostream& operator<< (std::ostream& os, List_Exp& list){
-    node<int> *l = list.GetHead();
-    if (l == NULL){
+std::ostream& operator << (std::ostream& os, List_Exp& list){
+    if (list.IsEmpty()){
         os << "NULL";
     } else {
+        auto l = list.GetHead();
         while (list.GoForward(l) != NULL){
             os << list.GetVal(l) << " -> ";
             l = list.GoForward(l);
@@ -18,44 +15,42 @@ std::ostream& operator<< (std::ostream& os, List_Exp& list){
     return os;
 }
 
-void Read(List_Exp& l, int& a, int& b, char *fname){
-  std::ifstream in;
-  in.open(fname);
-  in >> a >> b;
-  int c;
-  while(in >> c){
-    l.Push_back(c);
-  }
-  in.close();
-  return;
+
+std::istream& operator >> (std::istream& in, List_Exp& list){
+	int c;
+	while (in >> c)
+	{
+		list.Push_back(c);
+	}
+	return in;
 }
 
-bool CheckInRange (List_Exp& list, const int& a, const int& b){
-  node<int> *head = list.GetHead();
+bool List_Exp::CheckInRange (const int& a, const int& b){
+  List<int>::node *head = GetHead();
   bool f = false;
-  while (list.GoForward(head) && !f){
-    head = list.GoForward(head);
-    if(list.GetVal(head) >= a && list.GetVal(head) <= b)
+  while (GoForward(head) && !f){
+    head = GoForward(head);
+    if(GetVal(head) >= a && GetVal(head) <= b)
       f = true;
   }
   return f;
 }
 
-void DeleteEven (List_Exp& list){
-  node<int> *head = list.GetHead();
-  if (list.GetVal(head) % 2 == 0){
-      list.Pop_first();
+void List_Exp::DeleteEven (){
+  List<int>::node *head = GetHead();
+  if (GetVal(head) % 2 == 0){
+      Pop_first();
     }
-  while (list.GoForward(head) && list.GoForward(list.GoForward(head))){
-    if (list.GetVal(list.GoForward(head)) % 2 == 0){
-      list.Pop_after(head);
+  while (GoForward(head) && GoForward(GoForward(head))){
+    if (GetVal(GoForward(head)) % 2 == 0){
+      Pop_after(head);
     } else 
-      head = list.GoForward(head);
+      head = GoForward(head);
   }
-  if (list.GoForward(head))
-    head = list.GoForward(head);
-  if (list.GetVal(head) % 2 == 0){
-      list.Pop_back();
+  if (GoForward(head))
+    head = GoForward(head);
+  if (GetVal(head) % 2 == 0){
+      Pop_back();
     }
   return;
 }

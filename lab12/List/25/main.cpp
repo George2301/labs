@@ -7,13 +7,17 @@ using namespace std;
 int main(int argc, char *argv[]){
   List_Exp l;
   int a, b;
+  ifstream in;
 
-  Read(l, a, b, argv[1]);
+  in.open(argv[1]);
+  in >> a >> b;
+  in >> l;
+  in.close();
 
   cout << l << endl;
 
-  if (CheckInRange(l, a, b))
-    DeleteEven(l);
+  if (l.CheckInRange(a, b))
+    l.DeleteEven();
   cout << l << endl;
 
   system("pause");

@@ -13,11 +13,18 @@ List<T>::~List(){
 }
 
 template < typename T >
+bool List<T>::IsEmpty(){
+  bool f = false;
+  if (head == NULL) f = true;
+  return f;
+}
+
+template < typename T >
 void List<T>::Push_back(T val){
-    node<T> *temp = new node<T>;
+    List<T>::node *temp = new List<T>::node;
     temp->val = val;
     temp->next = NULL;
-    node<T> *thead = new node<T>;
+    List<T>::node *thead = new List<T>::node;
     thead = head;
     if (thead != NULL){
         while (thead->next != NULL){
@@ -33,7 +40,7 @@ void List<T>::Push_back(T val){
 
 template < typename T > 
 void List<T>::Pop_back(){
-    node<T> *thead = new node<T>;
+    List<T>::node *thead = new List<T>::node;
     thead = head;
     if (thead != NULL){
         if (thead->next != NULL){
@@ -52,8 +59,8 @@ void List<T>::Pop_back(){
 
 template <typename T> 
 void List<T>::Push_first (const T& v){
-  node<T> *temp = new node<T>;
-  node<T> *thead = new node<T>;
+  List<T>::node *temp = new List<T>::node;
+  List<T>::node *thead = new List<T>::node;
   thead = head;
   if (thead == NULL){
     thead->next = NULL;
@@ -67,9 +74,9 @@ void List<T>::Push_first (const T& v){
 }
 
 template <typename T> 
-void List<T>::Push_after (node<T>* k, const T& v){
-  node<T> *temp = new node<T>;
-  node<T> *thead = new node<T>;
+void List<T>::Push_after (node* k, const T& v){
+  List<T>::node *temp = new List<T>::node;
+  List<T>::node *thead = new List<T>::node;
   thead = head;
   bool f = true;
   while (thead->next && f){
@@ -87,7 +94,7 @@ void List<T>::Push_after (node<T>* k, const T& v){
 
 template <typename T> 
 void List<T>::Pop_first (){
-  node<T> *temp = new node<T>;
+  List<T>::node *temp = new List<T>::node;
   temp = head->next;
   head = NULL;
   head = temp;
@@ -95,9 +102,9 @@ void List<T>::Pop_first (){
 }
 
 template <typename T> 
-void List<T>::Pop_after (node<T>* k){
-  node<T> *temp = new node<T>;
-  node<T> *thead = new node<T>;
+void List<T>::Pop_after (node* k){
+  List<T>::node *temp = new List<T>::node;
+  List<T>::node *thead = new List<T>::node;
   thead = head;
   bool f = true;
   while (thead->next && f){
@@ -115,16 +122,16 @@ void List<T>::Pop_after (node<T>* k){
 }
 
 template <typename T>
-node<T>* List<T>::GetHead(){
+typename List<T>::node* List<T>::GetHead() const{
     return head;
 }
 
 template <typename T>
-T List<T>::GetVal(node<T>* n){
+T List<T>::GetVal(node* n) const{
   return n->val;
 }
 
 template <typename T>
-node<T>* List<T>::GoForward(node<T>* n){
+typename List<T>::node* List<T>::GoForward(node* n) const{
   return n->next;
 }

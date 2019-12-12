@@ -9,11 +9,13 @@ using namespace std;
 
 int main(int argc, char *argv[]){
   Deque_Exp d, v, n;
-  
-  Read(d, argv[1]);
+  ifstream in;
+  in.open(argv[1]);
+  in >> d;
+  in.close();
   cout << "Deque: " << endl;
   cout << d << endl;
-  SeparateVowels(d, v, n);
+  d.SeparateVowels(v, n);
   cout << "Only vowels: " << endl;
   cout << v << endl;
   cout << "Everything else: " << endl;

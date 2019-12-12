@@ -34,21 +34,25 @@ int Deque<T>::GetLength(){
 }
 
 template < typename T >
+void Deque<T>::Resize(){
+    T *tmp = new T[length + 8];
+    before = 4;
+    after = 4;
+    for(int i = 0; i < length; i++){
+        tmp[before + i] = d[before + i];
+    }
+    return;
+}
+
+template < typename T >
 void Deque<T>::Push_back(T val){
     if (before == 0 || after == 0){
-        T *tmp = new T[length + 8];
-        before = 4;
-        after = 4;
-        for(int i = 0; i < length; i++){
-            tmp[before + i] = d[before + i];
-        }
+        Resize();
         after--;
-        tmp[before + length] = val;
+        d[before + length] = val;
         length++;
-        d = tmp;
     } else {
         after--;
-        
         d[before + length] = val;
         length++;
     }
@@ -58,15 +62,9 @@ void Deque<T>::Push_back(T val){
 template < typename T >
 void Deque<T>::Push_front(T val){
     if (before == 0 || after == 0){
-        T *tmp = new T[length + 8];
-        before = 4;
-        after = 4;
-        for(int i = 0; i < length; i++){
-            tmp[before + i] = d[before + i];
-        }
+        Resize();
         length++;
-        tmp[before - 1] = val;
-        d = tmp;
+        d[before - 1] = val;
         before--;
     } else {
         before--;
@@ -80,6 +78,9 @@ void Deque<T>::Push_front(T val){
 template < typename T > 
 int Deque<T>::Pop_back(){
     int i = 1;
+    if (before > 16 || after > 16){
+        Resize();
+    }
     if (length > 0){
         length--;
         after++;
@@ -90,6 +91,9 @@ int Deque<T>::Pop_back(){
 template < typename T > 
 int Deque<T>::Pop_front(){
     int i = 1;
+    if (before > 16 || after > 16){
+        Resize();
+    }
     if (length > 0){
         length--;
         before++;

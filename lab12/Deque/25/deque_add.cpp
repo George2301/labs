@@ -1,9 +1,5 @@
 #include "deque_add.h"
 
-Deque_Exp::Deque_Exp(): Deque<int>() {
-  return;
-}
-
 std::ostream& operator<< (std::ostream& os, Deque_Exp& de){
     if (de.GetLength() == 0){
         os << "NULL";
@@ -27,28 +23,27 @@ std::ostream& operator<< (std::ostream& os, Deque_Exp& de){
     return os;
 }
 
-void Read(Deque_Exp& d, char *fname){
-  std::ifstream in(fname);
+std::istream& operator>> (std::istream& in, Deque_Exp& de){
   int c;
   while(in >> c){
-    d.Push_back(c);
+    de.Push_back(c);
   }
-  in.close();
-  return;
+  return in;
 }
+
 
 bool CheckNumbers(int c){
   return !(c % 8);
 }
 
-void SeparateNumbers(Deque_Exp d, Deque_Exp& v, Deque_Exp& n){
+void Deque_Exp::SeparateNumbers(Deque_Exp& v, Deque_Exp& n){
   int c;
-  while (d.GetLength() != 0){
-    c = d.Front();
+  while (GetLength() != 0){
+    c = Front();
       if (CheckNumbers(c)){
-        d.TopToBottom(v);
+        TopToBottom(v);
       } else 
-        d.TopToBottom(n);
+        TopToBottom(n);
   }
   return;
 }

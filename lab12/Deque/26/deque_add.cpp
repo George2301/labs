@@ -27,28 +27,26 @@ std::ostream& operator<< (std::ostream& os, Deque_Exp& de){
     return os;
 }
 
-void Read(Deque_Exp& d, char *fname){
-  std::ifstream in(fname);
+std::istream& operator>> (std::istream& in, Deque_Exp& de){
   char c;
   while(in >> c){
-    d.Push_back(c);
+    de.Push_back(c);
   }
-  in.close();
-  return;
+  return in;
 }
 
 bool CheckVowel(char c){
   return (c == 'A') || (c == 'a') || (c == 'E') || (c == 'e') || (c == 'I') || (c == 'i') || (c == 'O') || (c == 'o') || (c == 'Y') || (c == 'y');
 }
 
-void SeparateVowels(Deque_Exp d, Deque_Exp& v, Deque_Exp& n){
+void Deque_Exp::SeparateVowels(Deque_Exp& v, Deque_Exp& n){
   int c;
-  while (d.GetLength() != 0){
-    c = d.Front();
+  while (GetLength() != 0){
+    c = Front();
       if (CheckVowel(c)){
-        d.TopToBottom(v);
+        TopToBottom(v);
       } else 
-        d.TopToBottom(n);
+        TopToBottom(n);
   }
   return;
 }

@@ -1,14 +1,10 @@
 #include "node_add.h"
 
-List_Exp::List_Exp(): List<double>(){   
-    return;
-}
-
-std::ostream& operator<< (std::ostream& os, List_Exp& list){
-    node<double> *l = list.GetHead();
-    if (l == NULL){
+std::ostream& operator << (std::ostream& os, List_Exp& list){
+    if (list.IsEmpty()){
         os << "NULL";
     } else {
+        auto l = list.GetHead();
         while (list.GoForward(l) != NULL){
             os << list.GetVal(l) << " -> ";
             l = list.GoForward(l);
@@ -18,43 +14,42 @@ std::ostream& operator<< (std::ostream& os, List_Exp& list){
     return os;
 }
 
-void Read(List_Exp& l, double& a, char *fname){
-  std::ifstream in(fname);
-  in >> a;
-  int c;
-  while(in >> c){
-    l.Push_back(c);
-  }
-  in.close();
-  return;
+
+std::istream& operator >> (std::istream& in, List_Exp& list){
+	int c;
+	while (in >> c)
+	{
+		list.Push_back(c);
+	}
+	return in;
 }
 
-bool CheckNegative (List_Exp& list){
-  node<double> *head = list.GetHead();
+bool List_Exp::CheckNegative (){
+  List<double>::node* head = GetHead();
   bool f = false;
-  while (list.GoForward(head) && !f){
-    if(list.GetVal(head) < 0)
+  while (GoForward(head) && !f){
+    if(GetVal(head) < 0)
       f = true;
-    head = list.GoForward(head);  
+    head = GoForward(head);  
   }
   return f;
 }
 
-void DeleteBigger (List_Exp& list, const double& a){
-  node<double> *head = list.GetHead();
-  if (abs(list.GetVal(head)) > a){
-      list.Pop_first();
+void List_Exp::DeleteBigger (const double& a){
+  List<double>::node *head = GetHead();
+  if (abs(GetVal(head)) > a){
+      Pop_first();
     }
-  while (list.GoForward(head) && list.GoForward(list.GoForward(head))){
-    if (abs(list.GetVal(list.GoForward(head))) > a){
-      list.Pop_after(head);
+  while (GoForward(head) && GoForward(GoForward(head))){
+    if (abs(GetVal(GoForward(head))) > a){
+      Pop_after(head);
     } else 
-      head = list.GoForward(head);
+      head = GoForward(head);
   }
-  if (list.GoForward(head))
-    head = list.GoForward(head);
-  if (abs(list.GetVal(head)) > a){
-      list.Pop_back();
+  if (GoForward(head))
+    head = GoForward(head);
+  if (abs(GetVal(head)) > a){
+      Pop_back();
     }
   return;
 }
